@@ -1,4 +1,5 @@
 This javascript client is inspired from [cohere-typescript](https://github.com/cohere-ai/cohere-typescript)
+Forked from https://github.com/mistralai/client-js because the original monkey-patched `fetch()`.
 
 # Mistral Javascript Client
 
@@ -8,14 +9,14 @@ You can use the Mistral Javascript client to interact with the Mistral AI API.
 
 You can install the library in your project using:
 
-`npm install @mistralai/mistralai`
+`npm install @platformatic/mistral-client`
 
 ## Usage
 
 ### Set up
 
 ```typescript
-import MistralClient from '@mistralai/mistralai';
+import MistralClient from '@platformatic/mistral-client';
 
 const apiKey = process.env.MISTRAL_API_KEY || 'your_api_key';
 
@@ -117,7 +118,7 @@ node chat_with_streaming.js
 After the env variable setup the client will find the `MISTRAL_API_KEY` by itself
 
 ```typescript
-import MistralClient from '@mistralai/mistralai';
+import MistralClient from '@platformatic/mistral-client';
 
 const client = new MistralClient();
 ```

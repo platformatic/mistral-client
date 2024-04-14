@@ -1,4 +1,4 @@
-declare module '@mistralai/mistralai' {
+declare module '@platformatic/mistral-client' {
     export interface ModelPermission {
         id: string;
         object: 'model_permission';
