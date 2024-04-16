@@ -1,25 +1,6 @@
-let isNode = false;
-
 const VERSION = '0.0.3';
 const RETRY_STATUS_CODES = [429, 500, 502, 503, 504];
 const ENDPOINT = 'https://api.mistral.ai';
-
-/**
- * Initialize fetch
- * @return {Promise<void>}
- */
-async function initializeFetch() {
-  if (typeof window === 'undefined' ||
-    typeof globalThis.fetch === 'undefined') {
-    const nodeFetch = await import('node-fetch');
-    fetch = nodeFetch.default;
-    isNode = true;
-  } else {
-    fetch = globalThis.fetch;
-  }
-}
-
-initializeFetch();
 
 /**
  * MistralAPIError
@@ -94,28 +75,7 @@ class MistralClient {
 
         if (response.ok) {
           if (request?.stream) {
-            if (isNode) {
-              return response.body;
-            } else {
-              const reader = response.body.getReader();
-              // Chrome does not support async iterators yet, so polyfill it
-              const asyncIterator = async function* () {
-                try {
-                  while (true) {
-                    // Read from the stream
-                    const {done, value} = await reader.read();
-                    // Exit if we're done
-                    if (done) return;
-                    // Else yield the chunk
-                    yield value;
-                  }
-                } finally {
-                  reader.releaseLock();
-                }
-              };
-
-              return asyncIterator();
-            }
+            return response.body;
           }
           return await response.json();
         } else if (RETRY_STATUS_CODES.includes(response.status)) {
